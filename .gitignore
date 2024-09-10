@@ -15,3 +15,6 @@ dist
 
 # os related files
 .DS_Store
+
+# local config (for development)
+config

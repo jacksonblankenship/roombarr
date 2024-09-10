@@ -1,7 +1,7 @@
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 import {
-  DEFAULT_MOVIE_EXPIRY_DAYS,
+  DEFAULT_EXPIRY_DAYS,
   DEFAULT_DAYS_BEFORE_EXPIRY_NOTICE,
   DEFAULT_CRON_SCHEDULE,
   DEFAULT_LOG_LEVEL,
@@ -22,10 +22,7 @@ export const env = createEnv({
     // TODO: Each of these variables should be removed as a part of this PR
     MDBLIST_USERNAME: z.string().min(1),
     MDBLIST_LIST_NAME: z.string().min(1),
-    MOVIE_EXPIRY_DAYS: z.coerce
-      .number()
-      .min(0)
-      .default(DEFAULT_MOVIE_EXPIRY_DAYS),
+    MOVIE_EXPIRY_DAYS: z.coerce.number().min(0).default(DEFAULT_EXPIRY_DAYS),
     DAYS_BEFORE_EXPIRY_NOTICE: z.coerce
       .number()
       .min(0)

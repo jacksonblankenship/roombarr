@@ -29,6 +29,9 @@ dependencies:
   remeda:
     specifier: ^2.12.0
     version: 2.12.0
+  yaml:
+    specifier: ^2.5.1
+    version: 2.5.1
   zod:
     specifier: ^3.23.8
     version: 3.23.8
@@ -2142,7 +2145,6 @@ packages:
     resolution: {integrity: sha512-bLQOjaX/ADgQ20isPJRvF0iRUHIxVhYvr53Of7wGcWlO2jvtUlH5m87DsmulFVxRpNLOnI4tB6p/oh8D7kpn9Q==}
     engines: {node: '>= 14'}
     hasBin: true
-    dev: true
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
