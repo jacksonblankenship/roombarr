@@ -1,6 +1,9 @@
 FROM node:22.8.0-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV TZ="UTC" \
+  PUID=1000 \
+  PGID=1000
 RUN corepack enable
 COPY . /app
 WORKDIR /app
@@ -15,4 +18,7 @@ RUN pnpm run build
 FROM base
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
+
+VOLUME [ "/config" ]
+
 CMD [ "pnpm", "start" ]
