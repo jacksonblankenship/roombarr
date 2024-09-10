@@ -5,22 +5,47 @@ import {
   DEFAULT_EXPIRY_DAYS,
   DEFAULT_DAYS_BEFORE_EXPIRY_NOTICE,
 } from './defaults';
+import { join } from 'path';
+import { CONFIG_DIR, CONFIG_FILE } from './constants';
 
-const data = await readFile('/config/config.yml', 'utf-8');
-const yaml: unknown = parse(data);
+export const createListSchema = <T extends z.Primitive, U>(
+  provider: T,
+  options: z.ZodType<U>,
+) =>
+  z.object({
+    provider: z.literal(provider),
+    expiryDays: z.number().min(0).default(DEFAULT_EXPIRY_DAYS),
+    expiryNoticeDays: z
+      .number()
+      .min(0)
+      .default(DEFAULT_DAYS_BEFORE_EXPIRY_NOTICE),
+    options,
+  });
 
-export const config = z
-  .object({
-    lists: z.array(
-      z.object({
-        provider: z.enum(['mdblist']),
-        listUrl: z.string().url(),
-        expiryDays: z.number().min(0).default(DEFAULT_EXPIRY_DAYS),
-        expiryNoticeDays: z
-          .number()
-          .min(0)
-          .default(DEFAULT_DAYS_BEFORE_EXPIRY_NOTICE),
-      }),
-    ),
-  })
-  .parse(yaml);
+export const providerSchema = {
+  mdblist: createListSchema(
+    'mdblist',
+    z.object({
+      listUrl: z.string(),
+    }),
+  ),
+  imdb: createListSchema('imdb', z.object({})),
+} as const;
+
+const listSchema = z.discriminatedUnion('provider', [
+  providerSchema.mdblist,
+  providerSchema.imdb,
+]);
+export type List = z.infer<typeof listSchema>;
+
+export const configSchema = z.object({
+  lists: z.array(listSchema),
+});
+export type Config = z.infer<typeof configSchema>;
+
+export async function loadConfig() {
+  const data = await readFile(join(CONFIG_DIR, CONFIG_FILE), 'utf-8');
+  const yaml: unknown = parse(data);
+
+  return configSchema.parse(yaml);
+}
