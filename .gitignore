@@ -1,0 +1,17 @@
+# node
+node_modules
+yarn-error.log
+
+# build
+dist
+
+# environment variables
+.env
+.env.*
+!.env.*example
+
+# logs
+*.log
+
+# os related files
+.DS_Store

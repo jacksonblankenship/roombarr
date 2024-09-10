@@ -1,0 +1,24 @@
+{
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "imdb",
+    "jacksonblankenship",
+    "mdblist",
+    "packagejson",
+    "pino",
+    "preinstall",
+    "radarr",
+    "remeda",
+    "roomba",
+    "roombarr",
+    "tmdb",
+    "tseslint"
+  ]
+}

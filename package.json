@@ -1,0 +1,41 @@
+{
+  "name": "roombarr",
+  "type": "module",
+  "scripts": {
+    "build": "rollup --config",
+    "dev": "tsx --require dotenv/config ./src/index.ts dotenv_config_path=./.env",
+    "preinstall": "npx only-allow pnpm",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "node --require dotenv/config ./dist/index.js dotenv_config_path=./.env"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.11.1",
+    "axios": "^1.7.7",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3",
+    "pino": "^9.4.0",
+    "pino-pretty": "^11.2.2",
+    "remeda": "^2.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "22.5.4",
+    "@types/node-cron": "^3.0.11",
+    "eslint": "^9.9.1",
+    "globals": "^15.9.0",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "prettier-plugin-packagejson": "^2.5.2",
+    "rollup": "^4.21.2",
+    "tsx": "^4.19.0",
+    "typescript": "5.5.4",
+    "typescript-eslint": "^8.4.0"
+  },
+  "engines": {
+    "node": "22.8.0"
+  }
+}
