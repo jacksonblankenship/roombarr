@@ -5,6 +5,11 @@ import { logger } from './utils/pino';
 import { env } from './utils/env';
 
 export async function notifyMovies(movies: RadarrMovie[]) {
+  if (env.DISCORD_WEBHOOK_URL === undefined)
+    return logger.warn(
+      'No Discord webhook URL provided, skipping notifications',
+    );
+
   for (const { images, title, year, overview, added } of movies) {
     try {
       // Log the beginning of the notification process for each movie
