@@ -14,27 +14,26 @@ jest.mock('../lib/env', () => ({
 }));
 
 describe('fetchAllRadarrImportListMovies', () => {
+  const mockValidResponse: FetchAllImportListMoviesResponse = [
+    { imdbId: 'tt1234567' },
+    { imdbId: 'tt2345678' },
+    { imdbId: 'tt3456789' },
+  ];
+
   beforeEach(() => {
     server.resetHandlers();
   });
 
   it('fetches and parses import list movies correctly', async () => {
-    const mockValidImportListMoviesResponse: FetchAllImportListMoviesResponse =
-      [
-        { imdbId: 'tt1234567' },
-        { imdbId: 'tt2345678' },
-        { imdbId: 'tt3456789' },
-      ];
-
     server.use(
       http.get('*/api/v3/importlist/movie', () => {
-        return HttpResponse.json(mockValidImportListMoviesResponse);
+        return HttpResponse.json(mockValidResponse);
       }),
     );
 
     const result = await fetchAllRadarrImportListMovies();
 
-    expect(result).toEqual(mockValidImportListMoviesResponse);
+    expect(result).toEqual(mockValidResponse);
   });
 
   it('handles empty response correctly', async () => {

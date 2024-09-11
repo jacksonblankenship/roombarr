@@ -14,25 +14,25 @@ jest.mock('../lib/env', () => ({
 }));
 
 describe('fetchAllRadarrImportLists', () => {
+  const mockValidResponse: FetchAllImportListsResponse = [
+    { id: 1, name: 'List 1' },
+    { id: 2, name: 'List 2' },
+  ];
+
   beforeEach(() => {
     server.resetHandlers();
   });
 
   it('fetches and parses Radarr import lists correctly', async () => {
-    const mockValidImportLists: FetchAllImportListsResponse = [
-      { id: 1, name: 'List 1' },
-      { id: 2, name: 'List 2' },
-    ];
-
     server.use(
       http.get('*/api/v3/importlist', () => {
-        return HttpResponse.json(mockValidImportLists);
+        return HttpResponse.json(mockValidResponse);
       }),
     );
 
     const result = await fetchAllRadarrImportLists();
 
-    expect(result).toEqual(mockValidImportLists);
+    expect(result).toEqual(mockValidResponse);
   });
 
   it('handles empty response correctly', async () => {

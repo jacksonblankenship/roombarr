@@ -14,24 +14,24 @@ jest.mock('../lib/env', () => ({
 }));
 
 describe('fetchAllRadarrMovies', () => {
+  const mockValidResponse: FetchAllMoviesResponse = [
+    {
+      id: 1,
+      title: 'Test Movie',
+      overview: 'This is a test movie',
+      year: 2023,
+      imdbId: 'tt1234567',
+      added: new Date('2023-01-01'),
+      tags: [1, 2, 3],
+      images: [{ remoteUrl: 'http://example.com/image.jpg' }],
+    },
+  ];
+
   beforeEach(() => {
     server.resetHandlers();
   });
 
   it('fetches and parses Radarr movies correctly', async () => {
-    const mockValidResponse: FetchAllMoviesResponse = [
-      {
-        id: 1,
-        title: 'Test Movie',
-        overview: 'This is a test movie',
-        year: 2023,
-        imdbId: 'tt1234567',
-        added: new Date('2023-01-01'),
-        tags: [1, 2, 3],
-        images: [{ remoteUrl: 'http://example.com/image.jpg' }],
-      },
-    ];
-
     server.use(
       http.get('*/api/v3/movie', () => {
         return HttpResponse.json(mockValidResponse);

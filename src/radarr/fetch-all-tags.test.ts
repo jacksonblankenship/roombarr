@@ -11,15 +11,13 @@ jest.mock('../lib/env', () => ({
 }));
 
 describe('fetchAllRadarrTags', () => {
+  const mockValidResponse: FetchAllTagsResponse = [{ id: 1, label: 'Action' }];
+
   beforeEach(() => {
     server.resetHandlers();
   });
 
   it('fetches and parses Radarr tags correctly', async () => {
-    const mockValidResponse: FetchAllTagsResponse = [
-      { id: 1, label: 'Action' },
-    ];
-
     server.use(
       http.get('*/api/v3/tag', () => {
         return HttpResponse.json(mockValidResponse);

@@ -11,13 +11,13 @@ jest.mock('../lib/env', () => ({
 }));
 
 describe('createRadarrTag', () => {
+  const mockValidResponse: CreateTagResponse = { id: 1, label: 'Action' };
+
   beforeEach(() => {
     server.resetHandlers();
   });
 
   it('creates and parses a Radarr tag correctly', async () => {
-    const mockValidResponse: CreateTagResponse = { id: 1, label: 'Action' };
-
     server.use(
       http.post('*/api/v3/tag', async ({ request }) => {
         const body = await request.json();
