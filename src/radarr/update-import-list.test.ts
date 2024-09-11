@@ -1,5 +1,3 @@
-// updateRadarrImportList.spec.ts
-
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import {
