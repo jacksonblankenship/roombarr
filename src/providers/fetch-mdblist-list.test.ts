@@ -1,6 +1,6 @@
 import { fetchMdblistList } from '.';
 import { http, HttpResponse } from 'msw';
-import { server } from '../mocks/server';
+import { server } from '../../mocks/server';
 import { z } from 'zod';
 import { providerSchema } from '../utils/config';
 
