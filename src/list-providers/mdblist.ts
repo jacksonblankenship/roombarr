@@ -5,8 +5,10 @@ import { map } from 'remeda';
 import { generateShortHash } from '../lib/utils';
 
 export const mdblist: ListProvider<'mdblist'> = {
-  id: 'mdblist',
-  fetchList: async list => {
+  listProvider: 'mdblist',
+  computeListKey: list =>
+    `${mdblist.listProvider}:${generateShortHash(list.options.listUrl)}`,
+  fetchListMovies: async list => {
     const response = await axios.get(`${list.options.listUrl}/json`);
 
     const data = z
@@ -21,6 +23,4 @@ export const mdblist: ListProvider<'mdblist'> = {
       imdbId: movie.imdb_id,
     }));
   },
-  generateTag: list =>
-    `${mdblist.id}:${generateShortHash(list.options.listUrl)}`,
 };

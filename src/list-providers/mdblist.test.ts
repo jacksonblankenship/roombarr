@@ -21,7 +21,7 @@ describe('mdblist provider', () => {
     server.resetHandlers();
   });
 
-  describe('fetchList', () => {
+  describe('fetchListMovies', () => {
     it('fetches and parses mdblist data correctly', async () => {
       server.use(
         http.get('*/json', () => {
@@ -32,7 +32,7 @@ describe('mdblist provider', () => {
         }),
       );
 
-      const result = await mdblist.fetchList(mockList);
+      const result = await mdblist.fetchListMovies(mockList);
 
       expect(result).toEqual([
         { imdbId: 'tt1234567' },
@@ -47,7 +47,7 @@ describe('mdblist provider', () => {
         }),
       );
 
-      await expect(mdblist.fetchList(mockList)).rejects.toThrow();
+      await expect(mdblist.fetchListMovies(mockList)).rejects.toThrow();
     });
 
     it('handles empty response correctly', async () => {
@@ -57,7 +57,7 @@ describe('mdblist provider', () => {
         }),
       );
 
-      const result = await mdblist.fetchList(mockList);
+      const result = await mdblist.fetchListMovies(mockList);
       expect(result).toEqual([]);
     });
 
@@ -68,19 +68,19 @@ describe('mdblist provider', () => {
         }),
       );
 
-      await expect(mdblist.fetchList(mockList)).rejects.toThrow();
+      await expect(mdblist.fetchListMovies(mockList)).rejects.toThrow();
     });
   });
 
-  describe('generateTag', () => {
-    it('generates the correct tag', () => {
-      const tag = mdblist.generateTag(mockList);
+  describe('computeListKey', () => {
+    it('computes the correct list key', () => {
+      const tag = mdblist.computeListKey(mockList);
       expect(tag).toBe('mdblist:abc123');
       expect(generateShortHash).toHaveBeenCalledWith(mockList.options.listUrl);
     });
   });
 
-  it('has the correct id', () => {
-    expect(mdblist.id).toBe('mdblist');
+  it('has the correct list provider', () => {
+    expect(mdblist.listProvider).toBe('mdblist');
   });
 });
