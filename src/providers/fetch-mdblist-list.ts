@@ -1,3 +1,20 @@
+import axios from 'axios';
 import { Provider } from '.';
+import { z } from 'zod';
+import { map } from 'remeda';
 
-export const fetchMdblistList: Provider<'mdblist'> = async () => {};
+const mdblistMovieSchema = z.object({
+  imdb_id: z.string().startsWith('tt').length(9),
+});
+
+const mdblistResponseSchema = z.array(mdblistMovieSchema);
+
+export const fetchMdblistList: Provider<'mdblist'> = async list => {
+  const response = await axios.get(`${list.options.listUrl}/json`);
+
+  const data = mdblistResponseSchema.parse(response.data);
+
+  return map(data, movie => ({
+    imdbId: movie.imdb_id,
+  }));
+};

@@ -29,13 +29,9 @@ export const providerSchema = {
       listUrl: z.string(),
     }),
   ),
-  imdb: createListSchema('imdb', z.object({})),
 } as const;
 
-const listSchema = z.discriminatedUnion('provider', [
-  providerSchema.mdblist,
-  providerSchema.imdb,
-]);
+const listSchema = z.discriminatedUnion('provider', [providerSchema.mdblist]);
 export type List = z.infer<typeof listSchema>;
 
 export const configSchema = z.object({
