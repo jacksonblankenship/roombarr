@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { differenceInDays, format } from 'date-fns';
 import { RadarrMovie } from './fetch-radarr-movies';
 import { logger } from './utils/pino';
-import { env } from './utils/env';
+import { radarr } from './utils/radarr';
+import { discord } from './utils/discord';
 
 export async function deleteMovies(movies: RadarrMovie[]) {
   for (const { id, images, title, year, overview, added } of movies) {
@@ -11,15 +11,11 @@ export async function deleteMovies(movies: RadarrMovie[]) {
       logger.info({ id, title, year }, 'Attempting to delete movie');
 
       // Call Radarr API to delete the movie
-      const radarrResponse = await axios.delete(
-        `${env.RADARR_URL}/api/v3/movie/${id}`,
-        {
-          params: {
-            apiKey: env.RADARR_API_KEY,
-            deleteFiles: true,
-          },
+      const radarrResponse = await radarr.delete(`/api/v3/movie/${id}`, {
+        params: {
+          deleteFiles: true,
         },
-      );
+      });
 
       logger.debug(
         { radarrResponse },
@@ -56,15 +52,14 @@ export async function deleteMovies(movies: RadarrMovie[]) {
       };
 
       // Send a notification to Discord
-      const discordResponse = await axios.post(
-        env.DISCORD_WEBHOOK_URL,
-        discordPayload,
-      );
+      const discordResponse = await discord?.send(discordPayload);
 
-      logger.debug(
-        { discordResponse, discordPayload },
-        'Discord webhook response and payload',
-      );
+      if (discordResponse) {
+        logger.debug(
+          { discordResponse, discordPayload },
+          'Discord webhook response and payload',
+        );
+      }
 
       // Log success message once deletion and notification complete
       logger.info(

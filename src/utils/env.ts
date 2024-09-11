@@ -19,7 +19,11 @@ export const env = createEnv({
       .default(DEFAULT_RADARR_PORT),
     RADARR_API_KEY: z.string().min(1),
 
-    DISCORD_WEBHOOK_URL: z.string().url().optional(),
+    DISCORD_WEBHOOK_URL: z
+      .string()
+      .url()
+      .startsWith('https://discord.com/api/webhooks/')
+      .optional(),
 
     CRON_SCHEDULE: z.string().default(DEFAULT_CRON_SCHEDULE),
     LOG_LEVEL: z.enum(['info', 'debug']).default(DEFAULT_LOG_LEVEL),

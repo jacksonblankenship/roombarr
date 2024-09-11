@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { addDays, format } from 'date-fns';
 import { RadarrMovie } from './fetch-radarr-movies';
 import { logger } from './utils/pino';
 import { env } from './utils/env';
+import { discord } from './utils/discord';
 
 export async function notifyMovies(movies: RadarrMovie[]) {
   if (env.DISCORD_WEBHOOK_URL === undefined)
@@ -51,15 +51,14 @@ export async function notifyMovies(movies: RadarrMovie[]) {
       };
 
       // Send notification to Discord
-      const discordResponse = await axios.post(
-        env.DISCORD_WEBHOOK_URL,
-        discordPayload,
-      );
+      const discordResponse = await discord?.send(discordPayload);
 
-      logger.debug(
-        { discordResponse, discordPayload },
-        'Discord webhook response and payload',
-      );
+      if (discordResponse) {
+        logger.debug(
+          { discordResponse, discordPayload },
+          'Discord webhook response and payload',
+        );
+      }
 
       // Log success after notifying
       logger.info(

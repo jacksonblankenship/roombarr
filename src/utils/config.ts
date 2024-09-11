@@ -46,6 +46,5 @@ export type Config = z.infer<typeof configSchema>;
 export async function loadConfig() {
   const data = await readFile(join(CONFIG_DIR, CONFIG_FILE), 'utf-8');
   const yaml: unknown = parse(data);
-
   return configSchema.parse(yaml);
 }
