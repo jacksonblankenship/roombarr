@@ -8,7 +8,7 @@ const createTagResponseSchema = z.object({
 
 export type CreateTagResponse = z.infer<typeof createTagResponseSchema>;
 
-export async function createRadarrTag(label: string) {
+export async function createRadarrTag({ label }: { label: string }) {
   const response = await radarr.post('/api/v3/tag', { label });
 
   return createTagResponseSchema.parse(response.data);

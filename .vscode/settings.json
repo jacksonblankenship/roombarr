@@ -9,6 +9,7 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "imdb",
+    "importlist",
     "jacksonblankenship",
     "mdblist",
     "packagejson",

@@ -26,7 +26,9 @@ describe('createRadarrTag', () => {
       }),
     );
 
-    const result = await createRadarrTag('Action');
+    const result = await createRadarrTag({
+      label: 'Action',
+    });
 
     expect(result).toEqual(mockValidResponse);
   });
@@ -38,7 +40,11 @@ describe('createRadarrTag', () => {
       }),
     );
 
-    await expect(createRadarrTag('Action')).rejects.toThrow();
+    await expect(
+      createRadarrTag({
+        label: 'Action',
+      }),
+    ).rejects.toThrow();
   });
 
   it('handles network errors', async () => {
@@ -48,6 +54,10 @@ describe('createRadarrTag', () => {
       }),
     );
 
-    await expect(createRadarrTag('Action')).rejects.toThrow();
+    await expect(
+      createRadarrTag({
+        label: 'Action',
+      }),
+    ).rejects.toThrow();
   });
 });
