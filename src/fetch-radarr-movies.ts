@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { logger } from './utils/pino';
-import { env } from './utils/env';
 import { z } from 'zod';
+import { radarr } from './utils/radarr';
 
 const radarrMovieSchema = z.object({
   id: z.number().min(0),
@@ -24,11 +23,7 @@ export async function fetchRadarrMovies() {
   try {
     logger.debug('Fetching movies from Radarr...');
 
-    const response = await axios.get(`${env.RADARR_URL}/api/v3/movie`, {
-      params: {
-        apiKey: env.RADARR_API_KEY,
-      },
-    });
+    const response = await radarr.get('/api/v3/movie');
 
     logger.info(
       { count: response.data.length },
