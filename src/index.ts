@@ -1,7 +1,7 @@
-import { env } from './utils/env';
+import { env } from './lib/env';
 import { differenceWith, filter } from 'remeda';
 import { differenceInDays } from 'date-fns';
-import { logger } from './utils/pino';
+import { logger } from './lib/pino';
 import { fetchRadarrMovies } from './fetch-radarr-movies';
 import { fetchMdblistMovies } from './fetch-mdblist-movies';
 import { deleteMovies } from './delete-movies';

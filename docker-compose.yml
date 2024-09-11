@@ -18,4 +18,3 @@ services:
       CRON_SCHEDULE: '${CRON_SCHEDULE}'
     volumes:
       - ./config:/config
-    restart: unless-stopped

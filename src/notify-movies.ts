@@ -1,8 +1,8 @@
 import { addDays, format } from 'date-fns';
 import { RadarrMovie } from './fetch-radarr-movies';
-import { logger } from './utils/pino';
-import { env } from './utils/env';
-import { discord } from './utils/discord';
+import { logger } from './lib/pino';
+import { env } from './lib/env';
+import { discord } from './lib/discord';
 
 export async function notifyMovies(movies: RadarrMovie[]) {
   if (env.DISCORD_WEBHOOK_URL === undefined)

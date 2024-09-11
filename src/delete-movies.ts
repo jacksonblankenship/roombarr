@@ -1,8 +1,8 @@
 import { differenceInDays, format } from 'date-fns';
 import { RadarrMovie } from './fetch-radarr-movies';
-import { logger } from './utils/pino';
-import { radarr } from './utils/radarr';
-import { discord } from './utils/discord';
+import { logger } from './lib/pino';
+import { radarr } from './lib/radarr';
+import { discord } from './lib/discord';
 
 export async function deleteMovies(movies: RadarrMovie[]) {
   for (const { id, images, title, year, overview, added } of movies) {

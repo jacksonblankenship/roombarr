@@ -1,6 +1,6 @@
-import { logger } from './utils/pino';
+import { logger } from './lib/pino';
 import { z } from 'zod';
-import { radarr } from './utils/radarr';
+import { radarr } from './lib/radarr';
 
 const radarrMovieSchema = z.object({
   id: z.number().min(0),

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { z } from 'zod';
-import { logger } from './utils/pino';
-import { env } from './utils/env';
+import { logger } from './lib/pino';
+import { env } from './lib/env';
 
 const mdblistMovieSchema = z.object({
   id: z.number().min(0),
