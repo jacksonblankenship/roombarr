@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Provider } from '.';
+import { ListProvider } from '.';
 import { z } from 'zod';
 import { map } from 'remeda';
 
@@ -9,7 +9,7 @@ const mdblistMovieSchema = z.object({
 
 const mdblistResponseSchema = z.array(mdblistMovieSchema);
 
-export const fetchMdblistList: Provider<'mdblist'> = async list => {
+export const fetchMdblistList: ListProvider<'mdblist'> = async list => {
   const response = await axios.get(`${list.options.listUrl}/json`);
 
   const data = mdblistResponseSchema.parse(response.data);

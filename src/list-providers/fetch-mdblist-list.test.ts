@@ -1,14 +1,14 @@
-import { fetchMdblistList } from '.';
+import { fetchMdblistList, MovieDto } from '.';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { z } from 'zod';
-import { providerSchema } from '../utils/config';
+import { listProviderSchemas } from '../utils/config';
 
-const mockList: z.infer<typeof providerSchema.mdblist> = {
+const mockList: z.infer<typeof listProviderSchemas.mdblist> = {
   options: { listUrl: 'https://mdblist.com/lists/someuser/somelist' },
   expiryDays: 30,
   expiryNoticeDays: 5,
-  provider: 'mdblist',
+  listProvider: 'mdblist',
 };
 
 describe('fetchMdblistList', () => {
@@ -24,7 +24,10 @@ describe('fetchMdblistList', () => {
 
     const result = await fetchMdblistList(mockList);
 
-    expect(result).toEqual([{ imdbId: 'tt1234567' }, { imdbId: 'tt2345678' }]);
+    expect(result).toEqual([
+      { imdbId: 'tt1234567' },
+      { imdbId: 'tt2345678' },
+    ] satisfies Array<MovieDto>);
   });
 
   it('throws an error for invalid data', async () => {
