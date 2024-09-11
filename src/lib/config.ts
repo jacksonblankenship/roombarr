@@ -36,6 +36,8 @@ export const appConfigSchema = z.object({
   ),
 });
 
+export type AppConfig = z.infer<typeof appConfigSchema>;
+
 export async function loadConfig() {
   const data = await readFile(join(CONFIG_DIR, CONFIG_FILE), 'utf-8');
   const yaml: unknown = parse(data);

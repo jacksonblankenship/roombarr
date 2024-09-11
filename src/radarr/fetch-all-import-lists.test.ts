@@ -15,8 +15,9 @@ jest.mock('../lib/env', () => ({
 
 describe('fetchAllRadarrImportLists', () => {
   const mockValidResponse: FetchAllImportListsResponse = [
-    { id: 1, name: 'List 1' },
-    { id: 2, name: 'List 2' },
+    { id: 1, name: 'List 1', tags: [1, 2] },
+    { id: 2, name: 'List 2', tags: [3] },
+    { id: 3, name: 'List 3', tags: [] },
   ];
 
   beforeEach(() => {
@@ -65,5 +66,46 @@ describe('fetchAllRadarrImportLists', () => {
     );
 
     await expect(fetchAllRadarrImportLists()).rejects.toThrow();
+  });
+
+  it('validates import list properties', async () => {
+    const invalidList = { id: -1, name: '', tags: ['invalid'] };
+    server.use(
+      http.get('*/api/v3/importlist', () => {
+        return HttpResponse.json([invalidList]);
+      }),
+    );
+
+    await expect(fetchAllRadarrImportLists()).rejects.toThrow();
+  });
+
+  it('handles lists with no tags', async () => {
+    const listWithNoTags = { id: 1, name: 'No Tags List', tags: [] };
+    server.use(
+      http.get('*/api/v3/importlist', () => {
+        return HttpResponse.json([listWithNoTags]);
+      }),
+    );
+
+    const result = await fetchAllRadarrImportLists();
+
+    expect(result).toEqual([listWithNoTags]);
+  });
+
+  it('handles lists with multiple tags', async () => {
+    const listWithMultipleTags = {
+      id: 1,
+      name: 'Multi-Tag List',
+      tags: [1, 2, 3, 4],
+    };
+    server.use(
+      http.get('*/api/v3/importlist', () => {
+        return HttpResponse.json([listWithMultipleTags]);
+      }),
+    );
+
+    const result = await fetchAllRadarrImportLists();
+
+    expect(result).toEqual([listWithMultipleTags]);
   });
 });

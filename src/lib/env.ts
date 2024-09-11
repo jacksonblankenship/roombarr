@@ -8,6 +8,7 @@ import {
 
 export const env = createEnv({
   server: {
+    NODE_ENV: z.enum(['development', 'production']).default('development'),
     RADARR_BASE_URL: z.string().url(),
     RADARR_PORT: z.coerce
       .number()

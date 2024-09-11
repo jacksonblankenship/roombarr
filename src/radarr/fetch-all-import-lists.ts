@@ -5,6 +5,7 @@ const fetchAllImportListsResponseSchema = z.array(
   z.object({
     id: z.number().min(0),
     name: z.string(),
+    tags: z.array(z.number()),
   }),
 );
 
