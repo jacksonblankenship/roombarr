@@ -1,18 +1,8 @@
 import { z } from 'zod';
 import { radarr } from '.';
+import { radarrMovieSchema } from './schema';
 
-const fetchAllMoviesResponseSchema = z.array(
-  z.object({
-    id: z.number().min(0),
-    title: z.string(),
-    overview: z.string(),
-    year: z.number().min(0),
-    imdbId: z.string().startsWith('tt'),
-    added: z.coerce.date(),
-    tags: z.array(z.number()),
-    images: z.array(z.object({ remoteUrl: z.string() })),
-  }),
-);
+const fetchAllMoviesResponseSchema = z.array(radarrMovieSchema);
 
 export type FetchAllMoviesResponse = z.infer<
   typeof fetchAllMoviesResponseSchema

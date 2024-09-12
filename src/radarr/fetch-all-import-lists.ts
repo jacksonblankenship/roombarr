@@ -1,13 +1,8 @@
 import { z } from 'zod';
 import { radarr } from '.';
+import { radarrImportListSchema } from './schema';
 
-const fetchAllImportListsResponseSchema = z.array(
-  z.object({
-    id: z.number().min(0),
-    name: z.string(),
-    tags: z.array(z.number()),
-  }),
-);
+const fetchAllImportListsResponseSchema = z.array(radarrImportListSchema);
 
 export type FetchAllImportListsResponse = z.infer<
   typeof fetchAllImportListsResponseSchema
