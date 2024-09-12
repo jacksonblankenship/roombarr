@@ -10,6 +10,7 @@ import { updateRadarrImportList } from './radarr/update-import-list';
 import { fetchAllRadarrImportListMovies } from './radarr/fetch-all-import-list-movies';
 import { fetchAllRadarrMovies } from './radarr/fetch-all-movies';
 import { env } from './lib/env';
+import { compareSimilarStrings } from './lib/utils';
 
 // Fetch or create the Roombarr tag
 async function getOrCreateRoombarrTag() {
@@ -28,7 +29,8 @@ async function categorizeImportLists(appConfig: AppConfig) {
   const missingLists = differenceWith(
     appConfig.lists,
     radarrImportLists,
-    (configList, radarrList) => configList.name === radarrList.name,
+    (configList, radarrList) =>
+      compareSimilarStrings(configList.name, radarrList.name),
   );
 
   if (missingLists.length > 0) {
@@ -41,12 +43,14 @@ async function categorizeImportLists(appConfig: AppConfig) {
     monitored: intersectionWith(
       radarrImportLists,
       appConfig.lists,
-      (radarrList, configList) => radarrList.name === configList.name,
+      (radarrList, configList) =>
+        compareSimilarStrings(radarrList.name, configList.name),
     ),
     orphaned: differenceWith(
       radarrImportLists,
       appConfig.lists,
-      (radarrList, configList) => radarrList.name === configList.name,
+      (radarrList, configList) =>
+        compareSimilarStrings(radarrList.name, configList.name),
     ),
   };
 }
