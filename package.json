@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup --config",
-    "dev": "tsx --require dotenv/config ./src/index.ts dotenv_config_path=./.env",
+    "dev": "tsx watch --require dotenv/config ./src/index.ts dotenv_config_path=./.env",
     "preinstall": "npx only-allow pnpm",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

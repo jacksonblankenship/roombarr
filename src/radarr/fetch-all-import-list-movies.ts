@@ -4,6 +4,7 @@ import { radarr } from '.';
 const fetchAllImportListMoviesResponseSchema = z.array(
   z.object({
     imdbId: z.string().startsWith('tt'),
+    lists: z.array(z.number()),
   }),
 );
 
