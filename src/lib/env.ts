@@ -4,7 +4,7 @@ import {
   DEFAULT_CRON_SCHEDULE,
   DEFAULT_LOG_LEVEL,
   DEFAULT_RADARR_PORT,
-} from './defaults';
+} from '../config/defaults';
 
 export const env = createEnv({
   server: {

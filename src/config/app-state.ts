@@ -3,17 +3,17 @@ import { join } from 'path';
 import { parse, stringify } from 'superjson';
 import { CONFIG_DIR, STATE_FILE } from './constants';
 import { z } from 'zod';
-import { radarrMovieSchema } from '../radarr/schema';
 import { existsSync } from 'fs';
+import { movieSchema } from '../services/radarr/schema';
 
-const snapshotSchema = z.array(radarrMovieSchema);
+const snapshotSchema = z.array(movieSchema);
 
 type Snapshot = z.infer<typeof snapshotSchema>;
 
 const pendingRemovalSchema = z.object({
   removalDate: z.date(),
   notificationDate: z.date(),
-  movie: radarrMovieSchema,
+  movie: movieSchema,
 });
 
 type PendingRemoval = z.infer<typeof pendingRemovalSchema>;

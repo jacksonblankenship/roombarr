@@ -1,29 +1,27 @@
 import { differenceWith, filter, intersectionWith } from 'remeda';
-import { AppConfig, loadAppConfig } from './lib/app-config';
-import { RADARR_ROOMBARR_TAG_LABEL } from './lib/constants';
+import { AppConfig, loadAppConfig } from './config/app-config';
+import { RADARR_ROOMBARR_TAG_LABEL } from './config/constants';
 import { logger } from './lib/pino';
-import { createRadarrTag } from './radarr/create-tag';
-import { fetchAllRadarrImportLists } from './radarr/fetch-all-import-lists';
-import { fetchAllRadarrTags } from './radarr/fetch-all-tags';
-import { fetchRadarrImportList } from './radarr/fetch-import-list';
-import { updateRadarrImportList } from './radarr/update-import-list';
-import { fetchAllRadarrImportListMovies } from './radarr/fetch-all-import-list-movies';
-import { fetchAllRadarrMovies } from './radarr/fetch-all-movies';
 import { env } from './lib/env';
+import { getImportList } from './services/radarr/endpoints/get-import-list';
+import { getImportListMovies } from './services/radarr/endpoints/get-import-list-movies';
+import { getImportLists } from './services/radarr/endpoints/get-import-lists';
+import { getMovies } from './services/radarr/endpoints/get-movies';
+import { getTags } from './services/radarr/endpoints/get-tags';
+import { postTag } from './services/radarr/endpoints/post-tag';
+import { putImportList } from './services/radarr/endpoints/put-import-list';
 
 // Fetch or create the Roombarr tag
 async function getOrCreateRoombarrTag() {
-  const tags = await fetchAllRadarrTags();
+  const tags = await getTags();
   const existingTag = tags.find(tag => tag.label === RADARR_ROOMBARR_TAG_LABEL);
 
-  return (
-    existingTag || (await createRadarrTag({ label: RADARR_ROOMBARR_TAG_LABEL }))
-  );
+  return existingTag || (await postTag({ label: RADARR_ROOMBARR_TAG_LABEL }));
 }
 
 // Validate import lists and categorize them
 async function categorizeImportLists(appConfig: AppConfig) {
-  const radarrImportLists = await fetchAllRadarrImportLists();
+  const radarrImportLists = await getImportLists();
 
   const missingLists = differenceWith(
     appConfig.lists,
@@ -62,13 +60,13 @@ async function updateImportListTags(
   tagId: number,
   addTag: boolean,
 ) {
-  const importList = await fetchRadarrImportList(importListId);
+  const importList = await getImportList(importListId);
 
   const updatedTags = addTag
     ? [...importList.tags, tagId]
     : importList.tags.filter(tag => tag !== tagId);
 
-  return await updateRadarrImportList(importList.id, {
+  return await putImportList(importList.id, {
     ...importList,
     tags: updatedTags,
   });
@@ -99,7 +97,7 @@ async function main() {
     }),
   );
 
-  const importListMovies = await fetchAllRadarrImportListMovies();
+  const importListMovies = await getImportListMovies();
   const monitoredListIds = monitored.map(list => list.id);
 
   const moviesToMonitor = filter(
@@ -112,7 +110,7 @@ async function main() {
       ).length > 0,
   );
 
-  const allRadarrMovies = await fetchAllRadarrMovies();
+  const allRadarrMovies = await getMovies();
   const taggedMovies = filter(allRadarrMovies, movie =>
     movie.tags.includes(roombarrTag.id),
   );

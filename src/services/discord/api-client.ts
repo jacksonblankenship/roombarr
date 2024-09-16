@@ -1,4 +1,4 @@
-import { env } from './env';
+import { env } from '../../lib/env';
 import { WebhookClient } from 'discord.js';
 
 export const discord = env.DISCORD_WEBHOOK_URL

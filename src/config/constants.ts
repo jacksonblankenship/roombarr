@@ -1,4 +1,4 @@
-import { env } from './env';
+import { env } from '../lib/env';
 
 const PROD_CONFIG_DIR = '/config';
 const DEV_CONFIG_DIR = './config';

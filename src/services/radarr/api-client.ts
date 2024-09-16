@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { env } from '../lib/env';
+import { env } from '../../lib/env';
 
 export const radarr = axios.create({
   baseURL: `${env.RADARR_BASE_URL}:${env.RADARR_PORT}`,
