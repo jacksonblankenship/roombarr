@@ -1,11 +1,15 @@
 import { z } from 'zod';
 import { radarr } from '../api-client';
-import { importListSchema } from '../schema';
+import { radarrImportListSchema } from '../schema';
 
 export const getImportLists = z
   .function()
-  .args(z.void())
-  .returns(z.promise(z.array(importListSchema)))
-  .implement(() => {
-    return radarr.get('/api/v3/importlist');
+  .returns(z.promise(z.array(radarrImportListSchema)))
+  .implement(async () => {
+    const response =
+      await radarr.get<Array<z.infer<typeof radarrImportListSchema>>>(
+        '/api/v3/importlist',
+      );
+
+    return response.data;
   });

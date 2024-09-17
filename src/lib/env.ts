@@ -27,3 +27,5 @@ export const env = createEnv({
   },
   runtimeEnv: process.env,
 });
+
+export type Env = typeof env;

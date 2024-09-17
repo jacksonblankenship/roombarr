@@ -1,11 +1,15 @@
 import { z } from 'zod';
 import { radarr } from '../api-client';
-import { movieSchema } from '../schema';
+import { radarrMovieSchema } from '../schema';
 
 export const getMovies = z
   .function()
-  .args(z.void())
-  .returns(z.promise(z.array(movieSchema)))
-  .implement(() => {
-    return radarr.get('/api/v3/movie');
+  .returns(z.promise(z.array(radarrMovieSchema)))
+  .implement(async () => {
+    const response =
+      await radarr.get<Array<z.infer<typeof radarrMovieSchema>>>(
+        '/api/v3/movie',
+      );
+
+    return response.data;
   });

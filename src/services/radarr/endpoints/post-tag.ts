@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { radarr } from '../api-client';
-import { tagSchema } from '../schema';
+import { radarrTagSchema } from '../schema';
 
 export const postTag = z
   .function()
@@ -9,7 +9,12 @@ export const postTag = z
       label: z.string(),
     }),
   )
-  .returns(z.promise(tagSchema))
-  .implement(data => {
-    return radarr.post('/api/v3/tag', data);
+  .returns(z.promise(radarrTagSchema))
+  .implement(async data => {
+    const response = await radarr.post<z.infer<typeof radarrTagSchema>>(
+      '/api/v3/tag',
+      data,
+    );
+
+    return response.data;
   });

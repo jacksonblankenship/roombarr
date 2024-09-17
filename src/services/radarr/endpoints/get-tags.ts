@@ -1,11 +1,13 @@
 import { z } from 'zod';
 import { radarr } from '../api-client';
-import { tagSchema } from '../schema';
+import { radarrTagSchema } from '../schema';
 
 export const getTags = z
   .function()
-  .args(z.void())
-  .returns(z.promise(z.array(tagSchema)))
-  .implement(() => {
-    return radarr.get('/api/v3/tag');
+  .returns(z.promise(z.array(radarrTagSchema)))
+  .implement(async () => {
+    const response =
+      await radarr.get<Array<z.infer<typeof radarrTagSchema>>>('/api/v3/tag');
+
+    return response.data;
   });

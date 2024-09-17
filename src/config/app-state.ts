@@ -4,16 +4,16 @@ import { parse, stringify } from 'superjson';
 import { CONFIG_DIR, STATE_FILE } from './constants';
 import { z } from 'zod';
 import { existsSync } from 'fs';
-import { movieSchema } from '../services/radarr/schema';
+import { radarrMovieSchema } from '../services/radarr/schema';
 
-const snapshotSchema = z.array(movieSchema);
+const snapshotSchema = z.array(radarrMovieSchema);
 
 type Snapshot = z.infer<typeof snapshotSchema>;
 
 const pendingRemovalSchema = z.object({
   removalDate: z.date(),
   notificationDate: z.date(),
-  movie: movieSchema,
+  movie: radarrMovieSchema,
 });
 
 type PendingRemoval = z.infer<typeof pendingRemovalSchema>;
