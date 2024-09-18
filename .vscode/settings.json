@@ -9,6 +9,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "imdb",
+    "importlist",
+    "Inversify",
     "jacksonblankenship",
     "mdblist",
     "packagejson",
@@ -18,7 +20,9 @@
     "remeda",
     "roomba",
     "roombarr",
+    "superjson",
     "tmdb",
-    "tseslint"
+    "tseslint",
+    "unmark"
   ]
 }
