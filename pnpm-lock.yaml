@@ -23,6 +23,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      inversify:
+        specifier: ^6.0.2
+        version: 6.0.2
       node-cron:
         specifier: ^3.0.3
         version: 3.0.3
@@ -32,6 +35,9 @@ importers:
       pino-pretty:
         specifier: ^11.2.2
         version: 11.2.2
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
       remeda:
         specifier: ^2.13.0
         version: 2.13.0
@@ -1528,6 +1534,9 @@ packages:
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
 
+  inversify@6.0.2:
+    resolution: {integrity: sha512-i9m8j/7YIv4mDuYXUAcrpKPSaju/CIly9AHK5jvCBeoiM/2KEsuCQTTP+rzSWWpLYWRukdXFSl6ZTk2/uumbiA==}
+
   is-arrayish@0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
 
@@ -2123,6 +2132,9 @@ packages:
   real-require@0.2.0:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
+
+  reflect-metadata@0.2.2:
+    resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
   remeda@2.13.0:
     resolution: {integrity: sha512-7HnFywwKBxzk8kOfKXxrGC2/RkIWW6goL76Z7cTXiaacfn51iVfwoTHiLWU3cSMs28BApG5QLVxH2fUqZS7LuQ==}
@@ -4057,6 +4069,8 @@ snapshots:
 
   inherits@2.0.4: {}
 
+  inversify@6.0.2: {}
+
   is-arrayish@0.2.1: {}
 
   is-core-module@2.15.1:
@@ -4816,6 +4830,8 @@ snapshots:
       string_decoder: 1.3.0
 
   real-require@0.2.0: {}
+
+  reflect-metadata@0.2.2: {}
 
   remeda@2.13.0:
     dependencies:

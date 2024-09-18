@@ -5,7 +5,9 @@ import {
   radarrMovieSchema,
   radarrTagSchema,
 } from './radarr-service.schema';
+import { injectable } from 'inversify';
 
+@injectable()
 export class RadarrService {
   private apiClient: AxiosInstance;
 

@@ -6,7 +6,7 @@ import {
 } from '../config/defaults';
 import { readFile } from 'fs/promises';
 import { parse } from 'yaml';
-import { RadarrImportList } from './radarr-service.schema';
+import { injectable } from 'inversify';
 
 export const configListSchema = z
   .object({
@@ -38,6 +38,7 @@ export const configSchema = z.object({
 
 export type Config = z.infer<typeof configSchema>;
 
+@injectable()
 export class ConfigService {
   private configPath: string;
   private config: Config | null = null;
@@ -46,33 +47,15 @@ export class ConfigService {
     this.configPath = join(configDir, configFile);
   }
 
-  public async init() {
-    try {
-      const data = await readFile(this.configPath, 'utf-8');
-      const yaml: unknown = parse(data);
+  public async getConfig() {
+    if (this.config) return this.config;
 
-      this.config = configSchema.parse(yaml);
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'An unknown error occurred.';
+    const data = await readFile(this.configPath, 'utf-8');
+    const yaml: unknown = parse(data);
 
-      throw new Error(`Failed to load config: ${message}`);
-    }
-  }
+    const config = configSchema.parse(yaml);
+    this.config = config;
 
-  public validateListsExist(radarrImportLists: Array<RadarrImportList>) {
-    if (this.config === null) {
-      throw new Error('Config not initialized.');
-    }
-
-    for (const { name } of this.config.lists) {
-      const list = radarrImportLists.find(
-        list => list.name.toLowerCase().trim() === name.toLowerCase().trim(),
-      );
-
-      if (!list) {
-        throw new Error(`Import list "${name}" not found in Radarr.`);
-      }
-    }
+    return config;
   }
 }
