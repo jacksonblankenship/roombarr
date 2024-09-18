@@ -4,7 +4,7 @@ import { parse, stringify } from 'superjson';
 import { CONFIG_DIR, STATE_FILE } from './constants';
 import { z } from 'zod';
 import { existsSync } from 'fs';
-import { radarrMovieSchema } from '../services/radarr/schema';
+import { radarrMovieSchema } from '../services/radarr-service.schema';
 
 const snapshotSchema = z.array(radarrMovieSchema);
 
